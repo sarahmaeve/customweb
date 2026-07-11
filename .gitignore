@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- customweb ---
+# Scraper page cache (regenerate with tools/build_data.py)
+tools/.cache/
+# macOS
+.DS_Store

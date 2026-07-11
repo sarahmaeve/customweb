@@ -1,0 +1,134 @@
+/* The Consulting Occultist — a lamplit reading-record page.
+   Design language: design/glossa-notebook.md (after Katagami's "Glossa"). */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Spectral:ital,wght@0,400;0,500;1,400;1,500&family=Spline+Sans+Mono:wght@500;600&display=swap');
+
+:root {
+  --bg:#16120E; --surface:#1F1A14; --surface2:#262019; --leaf-edge:#0F0C09;
+  --text:#F3EAD9; --muted:#A9997F; --faint:#6E614C;
+  --accent:#B79CE8; --accent-deep:#9B7AD4; --gilt:#E0B250; --oxblood:#C25B4E;
+  --border:rgba(243,234,217,0.13); --rule:rgba(243,234,217,0.20);
+  --violet-wash:rgba(183,156,232,.26); --gilt-wash:rgba(224,178,80,.24);
+  --serif:"Spectral",Georgia,serif; --display:"Fraunces",Georgia,serif;
+  --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+* { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; font-size:calc(100% + 5.33px); } /* +4pt: scales every rem-based size */
+body {
+  margin:0; color:var(--text); font-family:var(--serif); font-size:1.0625rem; line-height:1.6;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(243,234,217,0.035) 1px, transparent 0) 0 0 / 26px 26px,
+    var(--bg);
+}
+a { color:var(--accent); }
+::selection { background:var(--violet-wash); }
+
+/* ---- hero ---- */
+.hero { max-width:1180px; margin:0 auto; padding:clamp(2.5rem,6vw,4.5rem) clamp(1.1rem,5vw,4rem) 1.5rem; position:relative; }
+.blot { /* opening violet ink-blot */
+  position:absolute; top:clamp(1.6rem,4vw,3rem); left:clamp(.7rem,4.4vw,3.3rem);
+  width:56px; height:56px; border-radius:9999px;
+  background:radial-gradient(closest-side, var(--accent-deep), rgba(155,122,212,.35) 62%, transparent 78%);
+  filter:blur(.3px); opacity:.9;
+}
+.kicker { font-family:var(--mono); font-size:.72rem; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 1rem; padding-left:74px; }
+h1 { font-family:var(--display); font-weight:700; font-size:clamp(2.1rem,5.4vw,3.3rem);
+  line-height:1.04; letter-spacing:-.018em; margin:.1rem 0 .6rem; }
+h1 em { font-style:normal; box-shadow:inset 0 -.42em var(--gilt-wash); padding:0 .06em; }
+.lede { max-width:60ch; color:var(--muted); font-size:1.06rem; margin:0 0 1.8rem; }
+.lede a { color:var(--accent); text-decoration-color:var(--accent-deep); text-underline-offset:2px; }
+
+.tools { display:flex; gap:1rem; align-items:baseline; flex-wrap:wrap; max-width:60ch; }
+.field { position:relative; flex:1; min-width:230px; }
+.field::before { content:"\2315"; position:absolute; left:.85rem; top:50%; transform:translateY(-50%);
+  color:var(--faint); font-size:1.05rem; }
+#q { width:100%; height:44px; padding:0 .9rem 0 2.4rem; font-family:var(--serif); font-size:1rem;
+  color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  outline:none; transition:border-color .15s, box-shadow .15s; }
+#q::placeholder { color:var(--faint); }
+#q:focus { border-color:var(--accent-deep); box-shadow:0 0 0 3px rgba(155,122,212,.32); }
+.count { font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; color:var(--muted);
+  white-space:nowrap; }
+
+/* sort toggle — a hairline stamp, violet ink */
+.sort { margin-left:auto; font-family:var(--mono); font-size:.72rem; font-weight:600; letter-spacing:.05em;
+  color:var(--accent); background:none; border:1px solid var(--border); border-radius:0;
+  padding:.42rem .7rem; cursor:pointer; box-shadow:1px 1px 0 rgba(0,0,0,.4);
+  transition:border-color .15s, color .15s; }
+.sort:hover { border-color:var(--accent-deep); }
+.sort:focus-visible { outline:none; border-color:var(--accent-deep); box-shadow:0 0 0 3px rgba(155,122,212,.32); }
+.sort .arw { display:inline-block; margin-right:.4rem; color:var(--gilt); }
+
+/* aired filter row */
+.filters { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-top:1.15rem;
+  font-family:var(--mono); font-size:.72rem; color:var(--muted); }
+.flabel { letter-spacing:.15em; text-transform:uppercase; color:var(--faint); }
+.presets { display:flex; gap:.55rem; }
+.presets button { font-family:var(--mono); font-size:.72rem; letter-spacing:.04em; color:var(--muted);
+  background:none; border:0; border-bottom:1px solid transparent; padding:.26rem .06rem; cursor:pointer;
+  transition:color .15s, border-color .15s; }
+.presets button:hover { color:var(--text); }
+.presets button.on { color:var(--accent); border-bottom-color:var(--accent-deep); }
+.presets button:focus-visible { outline:none; color:var(--accent); border-bottom-color:var(--accent-deep); }
+.filters select { font-family:var(--mono); font-size:.72rem; color:var(--text); background:var(--surface);
+  border:1px solid var(--border); border-radius:0; height:32px; padding:0 .4rem; cursor:pointer; }
+.filters select:focus-visible { outline:none; border-color:var(--accent-deep);
+  box-shadow:0 0 0 3px rgba(155,122,212,.32); }
+.yr { display:inline-flex; align-items:center; gap:.5rem; white-space:nowrap; }
+.filters .dash { color:var(--faint); }
+.filters .sep { color:var(--border); }
+.filters .count { margin-left:auto; }
+
+/* ---- ledger ---- */
+main { max-width:1180px; margin:0 auto; padding:1rem clamp(1.1rem,5vw,4rem) 5rem; }
+.rule { height:1px; background:var(--rule); border:0; margin:1.4rem 0 .4rem; }
+ol { list-style:none; margin:0; padding:0; }
+
+.entry { display:grid; grid-template-columns:120px 1fr; gap:clamp(1rem,3vw,2.2rem);
+  padding:1.35rem 0; border-top:1px solid var(--border); position:relative; }
+.entry:first-child { border-top:0; }
+
+/* margin rail */
+.rail { position:relative; padding-left:.9rem; }
+.rail::before { content:""; position:absolute; left:0; top:.15rem; bottom:-1.35rem; width:1px; background:var(--border); }
+.folio { /* rotated monospace folio stamp */
+  display:inline-block; font-family:var(--mono); font-size:.72rem; font-weight:600; letter-spacing:.04em;
+  color:var(--gilt); border:1px solid rgba(224,178,80,.4); padding:.22rem .42rem; border-radius:0;
+  transform:rotate(-1.8deg); box-shadow:1px 1px 0 rgba(0,0,0,.45); white-space:nowrap; }
+.gloss { display:flex; align-items:center; gap:.5rem; margin-top:.7rem;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.03em; color:var(--muted); font-style:normal; }
+.gloss .tick { display:inline-block; width:3px; height:1.05em; border-radius:0; flex:0 0 auto; }
+
+/* reading column */
+.col { min-width:0; }
+.title { font-family:var(--display); font-weight:600; font-size:1.24rem; line-height:1.22;
+  letter-spacing:-.012em; color:var(--text); text-decoration:none;
+  background-image:linear-gradient(var(--accent), var(--accent));
+  background-repeat:no-repeat; background-position:0 100%; background-size:0 1.5px;
+  transition:background-size .18s ease, color .18s; }
+.title:hover, .title:focus-visible { color:var(--accent); background-size:100% 1.5px; outline:none; }
+.seg { margin:.5rem 0 0; color:var(--muted); font-size:1.02rem; max-width:66ch; }
+.seg.none { font-style:italic; color:var(--faint); }
+.seg.none::before { /* one oxblood blot for the line with no gloss */
+  content:""; display:inline-block; width:.5rem; height:.5rem; border-radius:9999px;
+  background:var(--oxblood); margin-right:.5rem; vertical-align:.04em; opacity:.85; }
+
+/* translucent, overshooting highlighter on search hits */
+mark { background:var(--violet-wash); color:inherit; padding:.02em .12em; margin:0 -.06em;
+  border-radius:2px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+
+.empty { color:var(--muted); font-style:italic; padding:2rem 0; display:none; }
+
+footer { max-width:74ch; margin:0 auto; padding:0 clamp(1.1rem,5vw,4rem) 4rem;
+  color:var(--faint); font-size:.86rem; }
+footer a { color:var(--accent-deep); }
+
+@media (max-width:639px) {
+  .kicker { padding-left:64px; }
+  .entry { grid-template-columns:1fr; gap:.55rem; }
+  .rail { padding-left:0; display:flex; align-items:center; gap:.9rem; }
+  .rail::before { display:none; }
+  .gloss { margin-top:0; }
+}
+@media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
