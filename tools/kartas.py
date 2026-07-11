@@ -50,10 +50,16 @@ def extract_segment(block: str, marker: str = r"Consulting Occ"):
     cend = block.find('<div class="postTags"')
     content = block[cstart + 5: cend if cend != -1 else len(block)]
     for chunk in re.split(r"</?p\b[^>]*>", content):
-        if re.search(marker, chunk):
-            text = strip_tags(chunk)
-            if text:
-                return text
+        if not re.search(marker, chunk):
+            continue
+        # Block-editor episodes wrap the whole notes body in a single element,
+        # separating paragraphs with blank lines rather than <p> tags; keep only
+        # the paragraph that names the segment, not the neighbouring huts and ads.
+        for para in re.split(r"\n\s*\n", chunk):
+            if re.search(marker, para):
+                text = strip_tags(para)
+                if text:
+                    return text
     return None
 
 

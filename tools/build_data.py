@@ -68,6 +68,11 @@ def scrape():
         if not page_posts:
             break  # a page with no episode posts marks the end
         for p in page_posts:
+            # Reposts are separately-tagged duplicates of an episode already in
+            # the archive (a fresh permalink and date); skip them so each episode
+            # appears once, under its original air date.
+            if "/repost-" in p["url"] or p["title"].startswith("[Repost]"):
+                continue
             if p["url"] not in seen:
                 seen.add(p["url"])
                 posts.append(p)

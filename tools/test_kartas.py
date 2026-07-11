@@ -60,6 +60,20 @@ class ExtractSegment(unittest.TestCase):
         b = block("Ep", "<p>The Gaming Hut vamps for time.</p><p>The Cinema Hut reaches the sound era.</p>")
         self.assertIsNone(kartas.extract_segment(b))
 
+    def test_block_editor_blob_picks_marker_paragraph(self):
+        # Block-editor notes: several paragraphs in one element, blank-line
+        # separated, only the last naming the segment (cf. episode 349).
+        b = block("Ep", (
+            "In the <strong>Gaming Hut</strong> we explain our jargon.\n\n"
+            "The <strong>History Hut</strong> covers a polar expedition.\n\n"
+            "Finally backer Chris Kalley asks the <strong>Consulting Occultist</strong> "
+            "to blow the lid off magical Buenos Aires.\n\n"
+            "Want to pose a question? Support the Patreon!"))
+        self.assertEqual(
+            kartas.extract_segment(b),
+            "Finally backer Chris Kalley asks the Consulting Occultist "
+            "to blow the lid off magical Buenos Aires.")
+
 
 class ParsePage(unittest.TestCase):
     PAGE = (
