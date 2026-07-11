@@ -32,14 +32,16 @@ def entry_li(p, ymin, ymax):
     tick = kartas.temp_color(p["year"], ymin, ymax)
     date_disp = (kartas.short_date(p["iso"]) or p["date"]).replace(" ", NBSP)
     search_blob = f'{p["title"]} {seg} {p["date"]}'.lower()
+    num = kartas.episode_number(p["title"])
+    refs = kartas.refs_html(config.WIKI.get(int(num))) if num.isdigit() else ""
     return f'''    <li class="entry" data-iso="{esc(p["iso"], True)}" data-text="{esc(search_blob, True)}">
       <div class="rail">
-        <span class="folio">No.&nbsp;{esc(kartas.episode_number(p["title"]))}</span>
+        <span class="folio">No.&nbsp;{esc(num)}</span>
         <time class="gloss" datetime="{esc(p["iso"], True)}" title="{esc(p["date"], True)}"><span class="tick" style="background:{tick}"></span>{esc(date_disp)}</time>
       </div>
       <div class="col">
         <a class="title" href="{esc(p["url"], True)}">{esc(p["title"])}</a>
-        <p class="seg{' none' if placeholder else ''}" data-raw="{esc(seg, True)}">{esc(seg)}</p>
+        <p class="seg{' none' if placeholder else ''}" data-raw="{esc(seg, True)}">{esc(seg)}</p>{refs}
       </div>
     </li>'''
 

@@ -87,6 +87,22 @@ def episode_number(title: str) -> str:
     return m.group(1) if m else "—"  # em dash when a title lacks a number
 
 
+def refs_html(links) -> str:
+    """Render curated Wikipedia links as a chip row, or '' when there are none.
+
+    `links` is a list of (label, url) pairs. The row is emitted as a sibling of
+    the segment paragraph so the live-search highlighter (which rewrites the
+    segment's innerHTML on every keystroke) never disturbs it.
+    """
+    if not links:
+        return ""
+    chips = "".join(
+        '<a class="ref" href="{}" target="_blank" rel="noopener">{}</a>'.format(
+            _html.escape(url, quote=True), _html.escape(label))
+        for label, url in links)
+    return f'\n        <p class="refs">{chips}</p>'
+
+
 def lerp_hex(a: str, b: str, t: float) -> str:
     """Linear interpolate between two #rrggbb colors; t in [0, 1]."""
     ca = [int(a[i:i + 2], 16) for i in (1, 3, 5)]

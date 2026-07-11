@@ -73,8 +73,16 @@ episodes are special-cased in `tools/config.py`:
 - **#630** and **#534** are tagged but their notes never summarise the segment;
   they render as an oxblood-marked, italic placeholder line.
 
+Each entry also carries **Wikipedia links** for the specific subject(s) its
+segment covers, rendered as chips beneath the segment text. These are curated by
+hand in the `WIKI` table in `tools/config.py` (keyed by episode number); only
+specific named subjects — people, works, groups, named events — are linked,
+while broad practices (tarot, ley lines, chaos magick) are left bare. The table
+is independent of the scrape, so rebuilding `posts.json` never disturbs it.
+
 To point these tools at a different Ken-and-Robin recurring segment, edit
-`tools/config.py` (tag slug, label, segment marker, overrides) and rebuild.
+`tools/config.py` (tag slug, label, segment marker, overrides, Wikipedia links)
+and rebuild.
 
 ### Provenance & credit
 

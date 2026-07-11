@@ -114,6 +114,16 @@ ol { list-style:none; margin:0; padding:0; }
   content:""; display:inline-block; width:.5rem; height:.5rem; border-radius:9999px;
   background:var(--oxblood); margin-right:.5rem; vertical-align:.04em; opacity:.85; }
 
+/* Wikipedia reference chips beneath a segment */
+.refs { margin:.55rem 0 0; display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; }
+.refs::before { content:"Wikipedia"; font-family:var(--mono); font-size:.62rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--faint); margin-right:.15rem; }
+.ref { font-family:var(--mono); font-size:.68rem; letter-spacing:.02em; color:var(--muted);
+  text-decoration:none; border:1px solid var(--border); padding:.16rem .44rem;
+  transition:border-color .15s ease, color .15s ease; }
+.ref:hover, .ref:focus-visible { color:var(--accent); border-color:var(--accent-deep); outline:none; }
+.ref::after { content:"\2197"; margin-left:.3rem; color:var(--gilt); font-size:.9em; }
+
 /* translucent, overshooting highlighter on search hits */
 mark { background:var(--violet-wash); color:inherit; padding:.02em .12em; margin:0 -.06em;
   border-radius:2px; box-decoration-break:clone; -webkit-box-decoration-break:clone; }

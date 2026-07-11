@@ -104,6 +104,26 @@ class RenderHelpers(unittest.TestCase):
         self.assertEqual(kartas.short_date("2026-06-26"), "26 Jun 2026")
         self.assertEqual(kartas.short_date(""), "")
 
+    def test_refs_html_empty(self):
+        self.assertEqual(kartas.refs_html(None), "")
+        self.assertEqual(kartas.refs_html([]), "")
+
+    def test_refs_html_single(self):
+        out = kartas.refs_html([("Voynich Manuscript",
+                                 "https://en.wikipedia.org/wiki/Voynich_manuscript")])
+        self.assertIn('<p class="refs">', out)
+        self.assertIn('href="https://en.wikipedia.org/wiki/Voynich_manuscript"', out)
+        self.assertIn('rel="noopener"', out)
+        self.assertIn(">Voynich Manuscript</a>", out)
+
+    def test_refs_html_multiple_and_escaping(self):
+        out = kartas.refs_html([
+            ("A & B", "https://en.wikipedia.org/wiki/A_%26_B"),
+            ("C", "https://en.wikipedia.org/wiki/C"),
+        ])
+        self.assertEqual(out.count('class="ref"'), 2)
+        self.assertIn(">A &amp; B</a>", out)  # label is HTML-escaped
+
 
 if __name__ == "__main__":
     unittest.main()
